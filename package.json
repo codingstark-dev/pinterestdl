@@ -14,8 +14,7 @@
     "@nuxtjs/pwa": "^3.3.5",
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
-    "nuxt": "^2.15.3",
-    "tall": "^4.0.0"
+    "nuxt": "^2.15.3"
   },
   "devDependencies": {
     "eslint-config-prettier": "^8.1.0",

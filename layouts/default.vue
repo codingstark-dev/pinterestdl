@@ -1,5 +1,5 @@
 <template>
-  <div class="prose-sm	">
+  <div class="	">
     <nav-bar />
     <Nuxt />
   </div>
