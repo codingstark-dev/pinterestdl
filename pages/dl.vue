@@ -34,12 +34,7 @@
     </div>
     <br>
     <div v-if="errorAPi == true">
-      <div class="
-      flex
-      justify-center
-      mx-10
-      items-center
-      content-center">
+      <div class="flex justify-center mx-10 items-center content-center">
 
         <video
           :src="dataUrls.video.url"
@@ -168,7 +163,7 @@ export default {
       console.log(pinID)
       var config = {
         method: 'get',
-        url: 'http://localhost:8080/pin',
+        url: 'https://pinterest-api.vercel.app/pin',
         headers: {
           id: pinID,
         },
@@ -191,4 +186,24 @@ export default {
     }
   },
 }
-</script>
+</script><style>
+.custom-shape-divider-top-1617389945 {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.custom-shape-divider-top-1617389945 svg {
+  position: relative;
+  display: block;
+  width: calc(115% + 1.3px);
+  height: 101px;
+}
+
+.custom-shape-divider-top-1617389945 .shape-fill {
+  fill: #ffffff;
+}
+</style>
