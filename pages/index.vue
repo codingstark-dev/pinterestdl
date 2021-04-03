@@ -1,8 +1,8 @@
 <template>
   <div class=" pt-15">
-    <div class="bg-red-500 h-auto ">
+    <div class="bg-gradient-to-r from-red-500 to-red-700 h-auto ">
 
-      <h1 class="text-4xl text-center  font-semibold text-white  pt-3">Pinterest Video<br> Downloader
+      <h1 class="text-4xl text-center  font-semibold text-white  pt-3">Pinterest Video Downloader
       </h1>
       <h2 class=" text-center  font-medium text-white  pb-3">
         Download Pinterest video, Image and Gif online
