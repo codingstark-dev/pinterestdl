@@ -24,12 +24,18 @@
           placeholder="Enter Pinterest Link"
           class=" items-center w-full  m-0 p-4 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400 "
         >
+        <!-- <NuxtLink :to="{
+          name:'tools-dl',
+          params: { dl: pinLink}
+          }"></NuxtLink> -->
+
         <button
           type="submit"
           class="focus:outline-transparent items-center font-medium text-red-500 w-28 text-center  p-1 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400  mx-2 text-md hover:(bg-red-500 text-white)"
         >
           Download
         </button>
+
       </form>
     </div>
     <br>
@@ -127,18 +133,13 @@ export default {
       errorAPi: false,
     }
   },
-  watch: {
-    $route(to, from) {
-      this.navToDl()
-    },
-  },
   methods: {
     navToDl() {
       this.$router.push({
         path: 'dl',
         query: { dl: encodeURIComponent(this.pinLink) },
       })
-      this.$router.go(0)
+      // this.$router.go(-0)
     },
   },
   asyncData({
@@ -159,28 +160,83 @@ export default {
       queryData.includes('pinterest.com/pin/') ||
       queryData.includes('pin.it')
     ) {
-      const pinID = queryData.split('/')[4]
-      console.log(pinID)
-      var config = {
-        method: 'get',
-        url: 'https://pinterest-api.vercel.app/pin',
-        headers: {
-          id: pinID,
-        },
+      if (queryData.includes('pin.it')) {
+        var configExpandUrl = {
+          method: 'get',
+          url: 'https://pinterest-api.vercel.app/expandurl',
+          headers: {
+            url: queryData,
+          },
+        }
+        return $axios(configExpandUrl)
+          .then((result) => {
+            console.log(result.data, result.data == {})
+            if (
+              result.data !== {} &&
+              result.data != null &&
+              result.data != ''
+            ) {
+              const pinID = result.data.split('/')[4]
+
+              var config1 = {
+                method: 'get',
+                url: 'https://pinterest-api.vercel.app/pin',
+                headers: {
+                  id: pinID,
+                },
+              }
+              return $axios(config1)
+                .then((result) => {
+                  if (
+                    result.data !== {} &&
+                    result.data != null &&
+                    result.data != ''
+                  ) {
+                    return { dataUrls: result.data, errorAPi: true }
+                  } else {
+                    return { dataUrls: result.data, errorAPi: false }
+                  }
+                })
+                .catch((err) => {
+                  console.error(err)
+                  return { errorAPi: false }
+                })
+            } else {
+              return { errorAPi: false }
+            }
+          })
+          .catch((err) => {
+            console.error(err)
+            return { errorAPi: false }
+          })
+      } else if (queryData.includes('pinterest.com/pin/')) {
+        const pinID = queryData.split('/')[4]
+        console.log(pinID)
+        var config2 = {
+          method: 'get',
+          url: 'https://pinterest-api.vercel.app/pin',
+          headers: {
+            id: pinID,
+          },
+        }
+        return $axios(config2)
+          .then((result) => {
+            console.log(result.data, result.data == {})
+            if (
+              result.data !== {} &&
+              result.data != null &&
+              result.data != ''
+            ) {
+              return { dataUrls: result.data, errorAPi: true }
+            } else {
+              return { dataUrls: result.data, errorAPi: false }
+            }
+          })
+          .catch((err) => {
+            console.error(err)
+            return { errorAPi: false }
+          })
       }
-      return $axios(config)
-        .then((result) => {
-          console.log(result.data, result.data == {})
-          if (result.data !== {} && result.data != null && result.data != '') {
-            return { dataUrls: result.data, errorAPi: true }
-          } else {
-            return { dataUrls: result.data, errorAPi: false }
-          }
-        })
-        .catch((err) => {
-          console.error(err)
-          return { errorAPi: false }
-        })
     } else {
       return { errorAPi: false }
     }
