@@ -178,7 +178,7 @@ export default {
   methods: {
     navToDl() {
       this.$router.push({
-        name: 'localhost:3000/dl/dl',
+        name: 'dl',
         query: { dl: encodeURIComponent(this.pinLink) },
       })
       // this.$router.go(-0)
