@@ -183,15 +183,15 @@ export default {
       throw new Error('Post not found')
     }
   },
-  middleware: 'pinterest',
-  computed: {
-    errorAPi() {
-      return this.$store.state.link.error
-    },
-    dataUrls() {
-      return this.$store.state.link.list
-    },
-  },
+  // middleware: 'pinterest',
+  // computed: {
+  //   errorAPi() {
+  //     return this.$store.state.link.error
+  //   },
+  //   dataUrls() {
+  //     return this.$store.state.link.list
+  //   },
+  // },
 
   data() {
     return {
@@ -213,105 +213,105 @@ export default {
       // this.$router.go(-0)
     },
   },
-  // asyncData({
-  //   $axios,
-  //   isDev,
-  //   route,
-  //   store,
-  //   env,
-  //   params,
-  //   query,
-  //   req,
-  //   res,
-  //   redirect,
-  //   error,
-  // }) {
-  //   const queryData = decodeURIComponent(query.dl)
-  //   if (
-  //     queryData.includes('pinterest.com/pin/') ||
-  //     queryData.includes('pin.it')
-  //   ) {
-  //     if (queryData.includes('pin.it')) {
-  //       var configExpandUrl = {
-  //         method: 'get',
-  //         url: 'https://pinterest-api.vercel.app/expandurl',
-  //         headers: {
-  //           url: queryData,
-  //         },
-  //       }
-  //       return $axios(configExpandUrl)
-  //         .then((result) => {
-  //           console.log(result.data, result.data == {})
-  //           if (
-  //             result.data !== {} &&
-  //             result.data != null &&
-  //             result.data != ''
-  //           ) {
-  //             const pinID = result.data.split('/')[4]
+  asyncData({
+    $axios,
+    isDev,
+    route,
+    store,
+    env,
+    params,
+    query,
+    req,
+    res,
+    redirect,
+    error,
+  }) {
+    const queryData = decodeURIComponent(query.dl)
+    if (
+      queryData.includes('pinterest.com/pin/') ||
+      queryData.includes('pin.it')
+    ) {
+      if (queryData.includes('pin.it')) {
+        var configExpandUrl = {
+          method: 'get',
+          url: 'https://pinterest-api.vercel.app/expandurl',
+          headers: {
+            url: queryData,
+          },
+        }
+        return $axios(configExpandUrl)
+          .then((result) => {
+            console.log(result.data, result.data == {})
+            if (
+              result.data !== {} &&
+              result.data != null &&
+              result.data != ''
+            ) {
+              const pinID = result.data.split('/')[4]
 
-  //             var config1 = {
-  //               method: 'get',
-  //               url: 'https://pinterest-api.vercel.app/pin',
-  //               headers: {
-  //                 id: pinID,
-  //               },
-  //             }
-  //             return $axios(config1)
-  //               .then((result) => {
-  //                 if (
-  //                   result.data !== {} &&
-  //                   result.data != null &&
-  //                   result.data != ''
-  //                 ) {
-  //                   return { dataUrls: result.data, errorAPi: true }
-  //                 } else {
-  //                   return { dataUrls: result.data, errorAPi: false }
-  //                 }
-  //               })
-  //               .catch((err) => {
-  //                 console.error(err)
-  //                 return { errorAPi: false }
-  //               })
-  //           } else {
-  //             return { errorAPi: false }
-  //           }
-  //         })
-  //         .catch((err) => {
-  //           console.error(err)
-  //           return { errorAPi: false }
-  //         })
-  //     } else if (queryData.includes('pinterest.com/pin/')) {
-  //       const pinID = queryData.split('/')[4]
-  //       console.log(pinID)
-  //       var config2 = {
-  //         method: 'get',
-  //         url: 'https://pinterest-api.vercel.app/pin',
-  //         headers: {
-  //           id: pinID,
-  //         },
-  //       }
-  //       return $axios(config2)
-  //         .then((result) => {
-  //           console.log(result.data, result.data == {})
-  //           if (
-  //             result.data !== {} &&
-  //             result.data != null &&
-  //             result.data != ''
-  //           ) {
-  //             return { dataUrls: result.data, errorAPi: true }
-  //           } else {
-  //             return { dataUrls: result.data, errorAPi: false }
-  //           }
-  //         })
-  //         .catch((err) => {
-  //           console.error(err)
-  //           return { errorAPi: false }
-  //         })
-  //     }
-  //   } else {
-  //     return { errorAPi: false }
-  //   }
-  // },
+              var config1 = {
+                method: 'get',
+                url: 'https://pinterest-api.vercel.app/pin',
+                headers: {
+                  id: pinID,
+                },
+              }
+              return $axios(config1)
+                .then((result) => {
+                  if (
+                    result.data !== {} &&
+                    result.data != null &&
+                    result.data != ''
+                  ) {
+                    return { dataUrls: result.data, errorAPi: true }
+                  } else {
+                    return { dataUrls: result.data, errorAPi: false }
+                  }
+                })
+                .catch((err) => {
+                  console.error(err)
+                  return { errorAPi: false }
+                })
+            } else {
+              return { errorAPi: false }
+            }
+          })
+          .catch((err) => {
+            console.error(err)
+            return { errorAPi: false }
+          })
+      } else if (queryData.includes('pinterest.com/pin/')) {
+        const pinID = queryData.split('/')[4]
+        console.log(pinID)
+        var config2 = {
+          method: 'get',
+          url: 'https://pinterest-api.vercel.app/pin',
+          headers: {
+            id: pinID,
+          },
+        }
+        return $axios(config2)
+          .then((result) => {
+            console.log(result.data, result.data == {})
+            if (
+              result.data !== {} &&
+              result.data != null &&
+              result.data != ''
+            ) {
+              return { dataUrls: result.data, errorAPi: true }
+            } else {
+              return { dataUrls: result.data, errorAPi: false }
+            }
+          })
+          .catch((err) => {
+            console.error(err)
+            return { errorAPi: false }
+          })
+      }
+    } else {
+      return { errorAPi: false }
+    }
+  },
 }
 </script><style>
 .custom-shape-divider-top-1617389945 {
