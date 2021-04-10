@@ -1,5 +1,7 @@
 <template>
   <div class=" pt-15">
+    <nuxt-child :key="$route.fullPath"></nuxt-child>
+
     <div class="bg-gradient-to-r from-red-500 to-red-700 h-auto ">
 
       <h1 class="text-3xl text-center  font-semibold text-white  pt-3">Pinterest Video Downloader
@@ -152,6 +154,9 @@
         </div>
       </div>
     </div>
+    <p v-if="$fetchState.pending">Fetching posts...</p>
+    <p v-else-if="$fetchState.error">Error while fetching posts</p><button @click="$fetch">Refresh Data</button>
+
   </div>
 
 </template>
@@ -159,6 +164,25 @@
 
 <script>
 export default {
+  refresh() {
+    this.$fetch()
+  },
+  async fetch() {
+    const post = await fetch(
+      `https://jsonplaceholder.typicode.com/posts/1`
+    ).then((res) => res.json())
+    console.log(post)
+    if (post.id === 1) {
+      this.post = 1
+    } else {
+      // set status code on server and
+      if (process.server) {
+        this.$nuxt.context.res.statusCode = 404
+      }
+      // use throw new Error()
+      throw new Error('Post not found')
+    }
+  },
   middleware: 'pinterest',
   computed: {
     errorAPi() {
@@ -168,6 +192,7 @@ export default {
       return this.$store.state.link.list
     },
   },
+
   data() {
     return {
       pinLink: '',
@@ -175,12 +200,16 @@ export default {
       // errorAPi: false,
     }
   },
+  created() {
+    console.log('created')
+  },
   methods: {
     navToDl() {
       this.$router.push({
         name: 'dl',
         query: { dl: encodeURIComponent(this.pinLink) },
       })
+
       // this.$router.go(-0)
     },
   },
