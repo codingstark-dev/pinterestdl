@@ -59,6 +59,7 @@
           <video
             :src="dataUrls.video.url"
             controls
+            muted
             class="w-auto rounded-lg shadow-lg focus:outline-transparent "
           ></video>
         </div>
@@ -206,11 +207,12 @@ export default {
   methods: {
     navToDl() {
       this.$router.push({
-        name: 'dl',
+        path: 'dl',
         query: { dl: encodeURIComponent(this.pinLink) },
       })
-
-      // this.$router.go(-0)
+      setTimeout(() => {
+        window.location.reload()
+      }, 500)
     },
   },
   asyncData({
@@ -226,6 +228,7 @@ export default {
     redirect,
     error,
   }) {
+    console.log(params)
     const queryData = decodeURIComponent(query.dl)
     if (
       queryData.includes('pinterest.com/pin/') ||
