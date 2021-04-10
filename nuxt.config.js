@@ -1,4 +1,5 @@
 export default {
+  ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'pinterestdl',
@@ -14,7 +15,7 @@ export default {
   css: [],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [ ],
+  plugins: [],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -42,11 +43,13 @@ export default {
 
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
-
+  generate: {
+    fallback: true,
+  },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-    html:{
-      minify:{
+    html: {
+      minify: {
         collapseBooleanAttributes: true,
         decodeEntities: true,
         minifyCSS: true,
@@ -58,8 +61,8 @@ export default {
         useShortDoctype: true,
         minifyURLs: true,
         removeComments: true,
-        removeEmptyElements: true
-      }
+        removeEmptyElements: true,
+      },
     },
-  }
+  },
 }
