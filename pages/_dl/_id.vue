@@ -59,7 +59,7 @@
           <video
             :src="dataUrls.video.url"
             controls
-            muted
+            preload="none"
             class="w-auto rounded-lg shadow-lg focus:outline-transparent "
           ></video>
         </div>
@@ -155,9 +155,6 @@
         </div>
       </div>
     </div>
-    <p v-if="$fetchState.pending">Fetching posts...</p>
-    <p v-else-if="$fetchState.error">Error while fetching posts</p><button @click="$fetch">Refresh Data</button>
-
   </div>
 
 </template>
@@ -165,25 +162,6 @@
 
 <script>
 export default {
-  refresh() {
-    this.$fetch()
-  },
-  async fetch() {
-    const post = await fetch(
-      `https://jsonplaceholder.typicode.com/posts/1`
-    ).then((res) => res.json())
-    console.log(post)
-    if (post.id === 1) {
-      this.post = 1
-    } else {
-      // set status code on server and
-      if (process.server) {
-        this.$nuxt.context.res.statusCode = 404
-      }
-      // use throw new Error()
-      throw new Error('Post not found')
-    }
-  },
   // middleware: 'pinterest',
   // computed: {
   //   errorAPi() {
@@ -201,9 +179,7 @@ export default {
       // errorAPi: false,
     }
   },
-  created() {
-    console.log('created')
-  },
+
   methods: {
     navToDl() {
       this.$router.push({
@@ -228,7 +204,6 @@ export default {
     redirect,
     error,
   }) {
-    console.log(params)
     const queryData = decodeURIComponent(query.dl)
     if (
       queryData.includes('pinterest.com/pin/') ||
@@ -244,7 +219,6 @@ export default {
         }
         return $axios(configExpandUrl)
           .then((result) => {
-            console.log(result.data, result.data == {})
             if (
               result.data !== {} &&
               result.data != null &&
@@ -285,7 +259,6 @@ export default {
           })
       } else if (queryData.includes('pinterest.com/pin/')) {
         const pinID = queryData.split('/')[4]
-        console.log(pinID)
         var config2 = {
           method: 'get',
           url: 'https://pinterest-api.vercel.app/pin',
@@ -295,7 +268,6 @@ export default {
         }
         return $axios(config2)
           .then((result) => {
-            console.log(result.data, result.data == {})
             if (
               result.data !== {} &&
               result.data != null &&
