@@ -59,7 +59,6 @@
           <video
             :src="dataUrls.video.url"
             controls
-            preload="none"
             class="w-auto rounded-lg shadow-lg focus:outline-transparent "
           ></video>
         </div>
@@ -67,8 +66,8 @@
         <div class="mx-5 mb-2">
           <a
             :href="dataUrls.video.url"
-            target="_blank"
-          > <button
+            @click.prevent="downloadItem(dataUrls.video.url)"
+          ><button
               type="submit"
               class="focus:outline-transparent items-center font-medium text-red-500 w-full text-center  p-1 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400  mx-2 text-md hover:(bg-red-500 text-white)"
             >
@@ -78,8 +77,8 @@
 
         <div class="mx-5">
           <a
-            :href="dataUrls.image.url"
-            target="_blank"
+            :href="'blob:'+dataUrls.image.url"
+            download
           > <button
               type="submit"
               class="focus:outline-transparent items-center font-medium text-red-500 w-full text-center  p-1 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400  mx-2 text-md hover:(bg-red-500 text-white)"
@@ -98,8 +97,8 @@
         <br>
         <div class="mx-5">
           <a
-            :href="dataUrls.image.url"
-            target="_blank"
+            :href="'blob:'+dataUrls.image.url"
+            download
           > <button
               type="submit"
               class="focus:outline-transparent items-center font-medium text-red-500 w-full text-center  p-1 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400  mx-2 text-md hover:(bg-red-500 text-white)"
@@ -189,6 +188,19 @@ export default {
       setTimeout(() => {
         window.location.reload()
       }, 500)
+    },
+    downloadItem(url, label) {
+      this.$axios
+        .get(url, { responseType: 'blob' })
+        .then((response) => {
+          const blob = new Blob([response.data], { type: 'video/mp4' })
+          const link = document.createElement('a')
+          link.href = URL.createObjectURL(blob)
+          link.download = 'label'
+          link.click()
+          URL.revokeObjectURL(link.href)
+        })
+        .catch(console.error)
     },
   },
   asyncData({
