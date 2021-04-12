@@ -216,6 +216,22 @@ export default {
     redirect,
     error,
   }) {
+    $axios({
+      url:
+        'https://v.pinimg.com/videos/mc/720p/60/ca/bf/60cabfa930c16130c68d6c3542da00c6.mp4',
+      method: 'GET',
+      responseType: 'stream', // important
+    })
+      .then(function (response) {
+        let contentType = response.headers['content-type']
+        let contentLength = response.headers['content-length']
+
+        console.log(res)
+        response.data.pipe(res)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
     const queryData = decodeURIComponent(query.dl)
     if (
       queryData.includes('pinterest.com/pin/') ||
