@@ -64,7 +64,10 @@
         </div>
         <br>
         <div class="mx-5 mb-2">
-          <a :href="'https://test.filemay.com/download/'+randomNumber+'.mp4?url='+dataUrls.video.url"><button
+          <a
+            :href="'https://test.filemay.com/download/'+randomNumber+'.mp4?url='+dataUrls.video.url"
+            download
+          ><button
               type="submit"
               class="focus:outline-transparent items-center font-medium text-red-500 w-full text-center  p-1 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400  mx-2 text-md hover:(bg-red-500 text-white)"
             >
@@ -74,7 +77,7 @@
 
         <div class="mx-5">
           <a
-            :href="'blob:'+dataUrls.image.url"
+            :href="'https://test.filemay.com/download/'+randomNumber+'.png?url='+dataUrls.image.url"
             download
           > <button
               type="submit"
@@ -94,9 +97,9 @@
         <br>
         <div class="mx-5">
           <a
-            :href="'blob:'+dataUrls.image.url"
+            :href="'https://test.filemay.com/download/'+randomNumber+'.mp4?url='+dataUrls.image.url"
             download
-          > <button
+          ><button
               type="submit"
               class="focus:outline-transparent items-center font-medium text-red-500 w-full text-center  p-1 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400  mx-2 text-md hover:(bg-red-500 text-white)"
             >
