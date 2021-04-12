@@ -64,10 +64,7 @@
         </div>
         <br>
         <div class="mx-5 mb-2">
-          <a
-            :href="dataUrls.video.url"
-            @click.prevent="downloadItem(dataUrls.video.url)"
-          ><button
+          <a :href="'https://test.filemay.com/download/'+randomNumber+'.mp4?url='+dataUrls.video.url"><button
               type="submit"
               class="focus:outline-transparent items-center font-medium text-red-500 w-full text-center  p-1 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400  mx-2 text-md hover:(bg-red-500 text-white)"
             >
@@ -173,6 +170,7 @@ export default {
 
   data() {
     return {
+      randomNumber: null,
       pinLink: '',
       // dataUrls: null,
       // errorAPi: false,
@@ -189,19 +187,6 @@ export default {
         window.location.reload()
       }, 500)
     },
-    downloadItem(url, label) {
-      this.$axios
-        .get(url, { responseType: 'blob' })
-        .then((response) => {
-          const blob = new Blob([response.data], { type: 'video/mp4' })
-          const link = document.createElement('a')
-          link.href = URL.createObjectURL(blob)
-          link.download = 'label'
-          link.click()
-          URL.revokeObjectURL(link.href)
-        })
-        .catch(console.error)
-    },
   },
   asyncData({
     $axios,
@@ -216,22 +201,7 @@ export default {
     redirect,
     error,
   }) {
-    $axios({
-      url:
-        'https://v.pinimg.com/videos/mc/720p/60/ca/bf/60cabfa930c16130c68d6c3542da00c6.mp4',
-      method: 'GET',
-      responseType: 'stream', // important
-    })
-      .then(function (response) {
-        let contentType = response.headers['content-type']
-        let contentLength = response.headers['content-length']
-
-        console.log(res)
-        response.data.pipe(res)
-      })
-      .catch((err) => {
-        console.log(err)
-      })
+    console.log(Math.floor(Math.random() * 6) + 1)
     const queryData = decodeURIComponent(query.dl)
     if (
       queryData.includes('pinterest.com/pin/') ||
@@ -240,7 +210,7 @@ export default {
       if (queryData.includes('pin.it')) {
         var configExpandUrl = {
           method: 'get',
-          url: 'https://pinterest-api.vercel.app/expandurl',
+          url: 'https://test.filemay.com/expandurl',
           headers: {
             url: queryData,
           },
@@ -256,7 +226,7 @@ export default {
 
               var config1 = {
                 method: 'get',
-                url: 'https://pinterest-api.vercel.app/pin',
+                url: 'https://test.filemay.com/pin',
                 headers: {
                   id: pinID,
                 },
@@ -268,14 +238,25 @@ export default {
                     result.data != null &&
                     result.data != ''
                   ) {
-                    return { dataUrls: result.data, errorAPi: true }
+                    return {
+                      dataUrls: result.data,
+                      errorAPi: true,
+                      randomNumber: Math.floor(Math.random() * 1000) + 1,
+                    }
                   } else {
-                    return { dataUrls: result.data, errorAPi: false }
+                    return {
+                      dataUrls: result.data,
+                      errorAPi: false,
+                      randomNumber: Math.floor(Math.random() * 1000) + 1,
+                    }
                   }
                 })
                 .catch((err) => {
                   console.error(err)
-                  return { errorAPi: false }
+                  return {
+                    errorAPi: false,
+                    randomNumber: Math.floor(Math.random() * 1000) + 1,
+                  }
                 })
             } else {
               return { errorAPi: false }
@@ -289,7 +270,7 @@ export default {
         const pinID = queryData.split('/')[4]
         var config2 = {
           method: 'get',
-          url: 'https://pinterest-api.vercel.app/pin',
+          url: 'https://test.filemay.com/pin',
           headers: {
             id: pinID,
           },
@@ -301,9 +282,17 @@ export default {
               result.data != null &&
               result.data != ''
             ) {
-              return { dataUrls: result.data, errorAPi: true }
+              return {
+                dataUrls: result.data,
+                errorAPi: true,
+                randomNumber: Math.floor(Math.random() * 1000) + 1,
+              }
             } else {
-              return { dataUrls: result.data, errorAPi: false }
+              return {
+                dataUrls: result.data,
+                errorAPi: false,
+                randomNumber: Math.floor(Math.random() * 1000) + 1,
+              }
             }
           })
           .catch((err) => {
