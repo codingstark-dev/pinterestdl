@@ -204,7 +204,6 @@ export default {
     redirect,
     error,
   }) {
-    console.log(Math.floor(Math.random() * 6) + 1)
     const queryData = decodeURIComponent(query.dl)
     if (
       queryData.includes('pinterest.com/pin/') ||
@@ -213,7 +212,7 @@ export default {
       if (queryData.includes('pin.it')) {
         var configExpandUrl = {
           method: 'get',
-          url: 'https://test.filemay.com/expandurl',
+          url: env.BASE_URL + 'expandurl',
           headers: {
             url: queryData,
           },
@@ -229,7 +228,7 @@ export default {
 
               var config1 = {
                 method: 'get',
-                url: 'https://test.filemay.com/pin',
+                url: env.BASE_URL + 'pin',
                 headers: {
                   id: pinID,
                 },
@@ -273,7 +272,7 @@ export default {
         const pinID = queryData.split('/')[4]
         var config2 = {
           method: 'get',
-          url: 'https://test.filemay.com/pin',
+          url: env.BASE_URL + 'pin',
           headers: {
             id: pinID,
           },

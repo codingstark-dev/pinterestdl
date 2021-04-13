@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 export default {
   ssr: true,
   // Global page headers: https://go.nuxtjs.dev/config-head
@@ -31,6 +33,7 @@ export default {
     '@nuxt/content',
     '@nuxtjs/proxy',
     '@nuxtjs/axios',
+    '@nuxtjs/dotenv',
   ],
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa
