@@ -1,8 +1,8 @@
 <template>
   <footer class="flex justify-center px-4 text-white bg-gradient-to-r from-red-500 to-red-700">
-    <div class="container py-6">
+    <div class=" py-6 max-w-7xl mx-auto">
       <div class="text-md font-bold text-center lg:text-2xl text-center">◉ Disclamier ◉</div>
-      <h1 class="text-md font-bold text-center lg:text-2xl">
+      <h1 class="text-md font-bold text-center lg:text-md">
         PinterestDl does not host any pirated or copyright content on its server, and all videos or images that you download from our tool are downloaded from their respective CDN servers. And this Tool is Not associated with Pinterest in any ways.
 
       </h1>
@@ -29,7 +29,7 @@
             >Disclamier</a>
             <a
               href="#"
-              class="px-4 text-sm font-medium text-white dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 hover:underline"
+              class="px-2 text-sm font-medium text-white dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 hover:underline"
             >Privacy Policy</a>
             <a
               href="#"
@@ -42,9 +42,3 @@
   </footer>
 </template>
 
-<script>
-export default {}
-</script>
-
-<style lang="scss" scoped>
-</style>

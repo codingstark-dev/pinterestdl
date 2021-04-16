@@ -1,45 +1,9 @@
 <template>
-  <div class=" pt-15">
-    <nuxt-child :key="$route.fullPath"></nuxt-child>
-
-    <div class="bg-gradient-to-r from-red-500 to-red-700 h-auto ">
-
-      <h1 class="text-3xl text-center  font-semibold text-white  pt-3">Pinterest Video Downloader
-      </h1>
-      <h2 class=" text-center  font-medium text-white  pb-3">
-        Download Pinterest video, Image and Gif online
-      </h2>
-
-      <form
-        method="post"
-        @submit.prevent="navToDl"
-        class="flex p-2"
-      >
-
-        <input
-          oninvalid="this.setCustomValidity('Please Enter Valid Link')"
-          onvalid="this.setCustomValidity('')"
-          required="required"
-          type="text"
-          v-model="pinLink"
-          onchange="this.setCustomValidity('')"
-          placeholder="Enter Pinterest Link"
-          class=" items-center w-full  m-0 p-4 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400 "
-        >
-        <!-- <NuxtLink :to="{
-          name:'tools-dl',
-          params: { dl: pinLink}
-          }"></NuxtLink> -->
-
-        <button
-          type="submit"
-          class="focus:outline-transparent items-center font-medium text-red-500 w-28 text-center  p-1 h-12  outline-transparent bg-white border-4 rounded-2xl border-red-400  mx-2 text-md hover:(bg-red-500 text-white)"
-        >
-          Download
-        </button>
-
-      </form>
-    </div>
+  <div class="pt-15">
+    <dl-form
+      v-model="pinLink"
+      :navToDl="navToDl"
+    />
     <br>
     <div v-if="errorAPi == true">
       <div v-if=" dataUrls.video
@@ -204,106 +168,110 @@ export default {
     redirect,
     error,
   }) {
-    const queryData = decodeURIComponent(query.dl)
-    if (
-      queryData.includes('pinterest.com/pin/') ||
-      queryData.includes('pin.it')
-    ) {
-      if (queryData.includes('pin.it')) {
-        var configExpandUrl = {
-          method: 'get',
-          url: env.BASE_URL + 'expandurl',
-          headers: {
-            url: queryData,
-          },
-        }
-        return $axios(configExpandUrl)
-          .then((result) => {
-            if (
-              result.data !== {} &&
-              result.data != null &&
-              result.data != ''
-            ) {
-              const pinID = result.data.split('/')[4]
+    try {
+      const queryData = decodeURIComponent(query.dl)
+      if (
+        queryData.includes('pinterest.com/pin/') ||
+        queryData.includes('pin.it')
+      ) {
+        if (queryData.includes('pin.it')) {
+          var configExpandUrl = {
+            method: 'get',
+            url: env.BASE_URL + 'expandurl',
+            headers: {
+              url: queryData,
+            },
+          }
+          return $axios(configExpandUrl)
+            .then((result) => {
+              if (
+                result.data !== {} &&
+                result.data != null &&
+                result.data != ''
+              ) {
+                const pinID = result.data.split('/')[4]
 
-              var config1 = {
-                method: 'get',
-                url: env.BASE_URL + 'pin',
-                headers: {
-                  id: pinID,
-                },
-              }
-              return $axios(config1)
-                .then((result) => {
-                  if (
-                    result.data !== {} &&
-                    result.data != null &&
-                    result.data != ''
-                  ) {
-                    return {
-                      dataUrls: result.data,
-                      errorAPi: true,
-                      randomNumber: Math.floor(Math.random() * 1000) + 1,
+                var config1 = {
+                  method: 'get',
+                  url: env.BASE_URL + 'pin',
+                  headers: {
+                    id: pinID,
+                  },
+                }
+                return $axios(config1)
+                  .then((result) => {
+                    if (
+                      result.data !== {} &&
+                      result.data != null &&
+                      result.data != ''
+                    ) {
+                      return {
+                        dataUrls: result.data,
+                        errorAPi: true,
+                        randomNumber: Math.floor(Math.random() * 1000) + 1,
+                      }
+                    } else {
+                      return {
+                        dataUrls: result.data,
+                        errorAPi: false,
+                        randomNumber: Math.floor(Math.random() * 1000) + 1,
+                      }
                     }
-                  } else {
+                  })
+                  .catch((err) => {
+                    console.error(err)
                     return {
-                      dataUrls: result.data,
                       errorAPi: false,
                       randomNumber: Math.floor(Math.random() * 1000) + 1,
                     }
-                  }
-                })
-                .catch((err) => {
-                  console.error(err)
-                  return {
-                    errorAPi: false,
-                    randomNumber: Math.floor(Math.random() * 1000) + 1,
-                  }
-                })
-            } else {
+                  })
+              } else {
+                return { errorAPi: false }
+              }
+            })
+            .catch((err) => {
+              console.error(err)
               return { errorAPi: false }
-            }
-          })
-          .catch((err) => {
-            console.error(err)
-            return { errorAPi: false }
-          })
-      } else if (queryData.includes('pinterest.com/pin/')) {
-        const pinID = queryData.split('/')[4]
-        var config2 = {
-          method: 'get',
-          url: env.BASE_URL + 'pin',
-          headers: {
-            id: pinID,
-          },
+            })
+        } else if (queryData.includes('pinterest.com/pin/')) {
+          const pinID = queryData.split('/')[4]
+          var config2 = {
+            method: 'get',
+            url: env.BASE_URL + 'pin',
+            headers: {
+              id: pinID,
+            },
+          }
+          return $axios(config2)
+            .then((result) => {
+              if (
+                result.data !== {} &&
+                result.data != null &&
+                result.data != ''
+              ) {
+                return {
+                  dataUrls: result.data,
+                  errorAPi: true,
+                  randomNumber: Math.floor(Math.random() * 1000) + 1,
+                }
+              } else {
+                return {
+                  dataUrls: result.data,
+                  errorAPi: false,
+                  randomNumber: Math.floor(Math.random() * 1000) + 1,
+                }
+              }
+            })
+            .catch((err) => {
+              console.error(err)
+              return { errorAPi: false }
+            })
         }
-        return $axios(config2)
-          .then((result) => {
-            if (
-              result.data !== {} &&
-              result.data != null &&
-              result.data != ''
-            ) {
-              return {
-                dataUrls: result.data,
-                errorAPi: true,
-                randomNumber: Math.floor(Math.random() * 1000) + 1,
-              }
-            } else {
-              return {
-                dataUrls: result.data,
-                errorAPi: false,
-                randomNumber: Math.floor(Math.random() * 1000) + 1,
-              }
-            }
-          })
-          .catch((err) => {
-            console.error(err)
-            return { errorAPi: false }
-          })
+      } else {
+        return { errorAPi: false }
       }
-    } else {
-      return { errorAPi: false }
+    } catch (error) {
+      error({ statusCode: 404, message: 'Post not found' })
     }
   },
 }

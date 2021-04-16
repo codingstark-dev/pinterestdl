@@ -50,7 +50,7 @@ export default {
   // Content module configuration: https://go.nuxtjs.dev/config-content
   content: {},
   generate: {
-    fallback: true,
+    fallback: '404.html',
   },
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
