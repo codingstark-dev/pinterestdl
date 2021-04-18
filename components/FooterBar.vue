@@ -3,8 +3,7 @@
     <div class=" py-6 max-w-7xl mx-auto">
       <div class="text-md font-bold text-center lg:text-2xl text-center">◉ Disclamier ◉</div>
       <h1 class="text-md font-bold text-center lg:text-md">
-        PinterestDl does not host any pirated or copyright content on its server, and all videos or images that you download from our tool are downloaded from their respective CDN servers. And this Tool is Not associated with Pinterest in any ways.
-
+        All company names or logos are ® trademarks of their respective holders. The use of them does not imply any affiliation with or endorsement by them & we don't host any copyright images or videos on this website, all rights belong to their respective owners.
       </h1>
 
       <hr class="h-px mt-6 ">
@@ -17,11 +16,11 @@
           >➤ Pages</a>
         </div>
 
-        <div class="flex mt-4 md:m-0">
-          <div class="-mx-4">
+        <div class=" mt-4 md:m-0">
+          <div class="-mx-4 ">
             <a
               href="#"
-              class="px-4 text-sm font-medium text-white hover:text-gray-700 dark:hover:text-gray-400 hover:underline"
+              class="px-2 text-sm font-medium text-white hover:text-gray-700 dark:hover:text-gray-400 hover:underline"
             >DMCA</a>
             <a
               href="#"
@@ -33,7 +32,7 @@
             >Privacy Policy</a>
             <a
               href="#"
-              class="px-4 text-sm font-medium text-white dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 hover:underline"
+              class="px-2 text-sm font-medium text-white dark:text-gray-200 hover:text-gray-700 dark:hover:text-gray-400 hover:underline"
             >Contact</a>
           </div>
         </div>

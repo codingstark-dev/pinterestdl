@@ -3,10 +3,12 @@
     <dl-form
       v-model="pinLink"
       :navToDl="navToDl"
+      headLine="Pinterest Video Downloader"
     />
     <br>
     <div v-if="errorAPi == true">
-      <div v-if=" dataUrls.video
+      <div
+        v-if=" dataUrls.video
       !=undefined
       &&
       dataUrls.video
@@ -16,7 +18,9 @@
       !=undefined
       &&
       dataUrls.image
-      !=null">
+      !=null"
+        class="max-w-md mx-auto"
+      >
 
         <div class="flex justify-center mx-10 items-center content-center">
 
@@ -29,7 +33,7 @@
         <br>
         <div class="mx-5 mb-2">
           <a
-            :href="'https://test.filemay.com/download/'+randomNumber+'.mp4?url='+dataUrls.video.url"
+            :href="'https://api.saveroid.com/download/'+randomNumber+'.mp4?url='+dataUrls.video.url"
             download
           ><button
               type="submit"
@@ -41,7 +45,7 @@
 
         <div class="mx-5">
           <a
-            :href="'https://test.filemay.com/download/'+randomNumber+'.png?url='+dataUrls.image.url"
+            :href="'https://api.saveroid.com/download/'+randomNumber+'.png?url='+dataUrls.image.url"
             download
           > <button
               type="submit"
@@ -61,7 +65,7 @@
         <br>
         <div class="mx-5">
           <a
-            :href="'https://test.filemay.com/download/'+randomNumber+'.mp4?url='+dataUrls.image.url"
+            :href="'https://api.saveroid.com/download/'+randomNumber+'.mp4?url='+dataUrls.image.url"
             download
           ><button
               type="submit"
@@ -71,51 +75,27 @@
         </div>
       </div>
     </div>
-    <div v-else-if="errorAPi == false">
-
-      <div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <div class="flex items-center justify-center w-12 bg-red-500">
-          <svg
-            class="w-6 h-6 text-white fill-current"
-            viewBox="0 0 40 40"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M20 3.36667C10.8167 3.36667 3.3667 10.8167 3.3667 20C3.3667 29.1833 10.8167 36.6333 20 36.6333C29.1834 36.6333 36.6334 29.1833 36.6334 20C36.6334 10.8167 29.1834 3.36667 20 3.36667ZM19.1334 33.3333V22.9H13.3334L21.6667 6.66667V17.1H27.25L19.1334 33.3333Z" />
-          </svg>
-        </div>
-
-        <div class="px-4 py-2 -mx-3">
-          <div class="mx-3">
-            <client-only>
-              <span class="font-semibold text-red-500 dark:text-red-400">Error Incorrect Url</span>
-              <p class="text-sm text-gray-600 dark:text-gray-200">Please Check Your Url <b>"{{decodeURIComponent($route.query.dl)}}"</b></p>
-            </client-only>
-          </div>
-        </div>
-
+    <div
+      v-else-if="errorAPi == false"
+      class="max-w-sm mx-auto"
+    >
+      <div
+        class="mx-1 shadow bg-red-500 border-l-7 border-red-200 text-white p-4 rounded-md"
+        role="alert"
+      >
+        <p class="font-bold">Error!! Incorrect Url.</p>
+        <p class="text-sm">Please Check Your Url <b>"{{decodeURIComponent($route.query.dl)}}"</b></p>
       </div><br>
-      <div class="flex w-full max-w-sm mx-auto overflow-hidden bg-white rounded-lg shadow-md dark:bg-gray-800">
-        <div class="flex items-center justify-center w-12 bg-blue-500">
-          <svg
-            class="w-6 h-6 text-white fill-current"
-            viewBox="0 0 40 40"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path d="M20 3.33331C10.8 3.33331 3.33337 10.8 3.33337 20C3.33337 29.2 10.8 36.6666 20 36.6666C29.2 36.6666 36.6667 29.2 36.6667 20C36.6667 10.8 29.2 3.33331 20 3.33331ZM21.6667 28.3333H18.3334V25H21.6667V28.3333ZM21.6667 21.6666H18.3334V11.6666H21.6667V21.6666Z" />
-          </svg>
-        </div>
+      <div
+        class="mx-1 shadow bg-blue-500 border-l-7 border-blue-200 text-white p-4  rounded-md overflow-hidden"
+        role="alert"
+      >
+        <p class="font-bold">Your Link Should Look Like This. </p>
+        <p class="text-sm">
+          https://in.pinterest.com/pin/585468020308380417/
+          or
+          https://pin.it/4tDmsbR</p>
 
-        <div class="px-4 py-2 -mx-3">
-          <div class="mx-3">
-            <span class="font-semibold text-blue-500 dark:text-blue-400">Your Link Should Look Like This
-            </span>
-            <p class="text-sm text-gray-600 dark:text-gray-200">
-              https://in.pinterest.com/pin/585468020308380417/
-              or
-              https://pin.it/4tDmsbR
-            </p>
-          </div>
-        </div>
       </div>
     </div>
   </div>
@@ -146,13 +126,15 @@ export default {
 
   methods: {
     navToDl() {
-      this.$router.push({
-        path: 'dl',
-        query: { dl: encodeURIComponent(this.pinLink) },
-      })
-      setTimeout(() => {
-        window.location.reload()
-      }, 500)
+      window.location.href = `pinterest-video-downloader?dl=${this.pinLink}`
+
+      // this.$router.push({
+      //   path: 'pinterest-video-downloader',
+      //   query: { dl: encodeURIComponent(this.pinLink) },
+      // })
+      // setTimeout(() => {
+      //   window.location.reload()
+      // }, 500)
     },
   },
   asyncData({
@@ -275,24 +257,4 @@ export default {
     }
   },
 }
-</script><style>
-.custom-shape-divider-top-1617389945 {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  line-height: 0;
-}
-
-.custom-shape-divider-top-1617389945 svg {
-  position: relative;
-  display: block;
-  width: calc(115% + 1.3px);
-  height: 101px;
-}
-
-.custom-shape-divider-top-1617389945 .shape-fill {
-  fill: #ffffff;
-}
-</style>
+</script>

@@ -2,6 +2,7 @@
   <div class=" pt-15">
     <dl-form
       v-model="pinLink"
+      headLine="All in One Video Downloader"
       :navToDl="navToDl"
     />
     <!-- <div class="bg-gradient-to-r from-red-500 to-red-700 h-auto ">
@@ -55,10 +56,11 @@ export default {
   methods: {
     navToDl() {
       console.log(this.pinLink)
-      this.$router.push({
-        path: 'dl',
-        query: { dl: encodeURIComponent(this.pinLink) },
-      })
+      window.location.href = `tools/pinterest-video-downloader?dl=${this.pinLink}`
+      // this.$router.push({
+      //   path: 'tools/pinterest-video-downloader',
+      //   query: { dl: encodeURIComponent(this.pinLink) },
+      // })
     },
   },
 }

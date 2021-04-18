@@ -2,9 +2,7 @@
   <div class="bg-gradient-to-r from-red-500 to-red-700 h-auto ">
     <div class=" max-w-2xl mx-auto">
 
-      <h1 class="text-4xl text-center  font-semibold text-white  pt-3"> All in One Video Downloader
-
-      </h1>
+      <h1 class="text-4xl text-center  font-semibold text-white  pt-3">{{headLine}}</h1>
       <h2 class=" text-center  font-medium text-white  pb-3">
         Download Pinterest video, Image and Gif online
       </h2>
@@ -39,7 +37,7 @@
 
 <script>
 export default {
-  props: { pinLink: String, navToDl: Function },
+  props: { pinLink: String, navToDl: Function, headLine: String },
   data() {
     return {
       newvalue: this.pinLink,
