@@ -114,7 +114,9 @@ export default {
   //     return this.$store.state.link.list
   //   },
   // },
-
+  fetch(ctx) {
+    console.log(ctx)
+  },
   data() {
     return {
       randomNumber: null,
@@ -126,7 +128,7 @@ export default {
 
   methods: {
     navToDl() {
-      window.location.href = `pinterest-video-downloader?dl=${this.pinLink}`
+      window.location.href = `?dl=${this.pinLink}`
 
       // this.$router.push({
       //   path: 'pinterest-video-downloader',
@@ -152,6 +154,7 @@ export default {
   }) {
     try {
       const queryData = decodeURIComponent(query.dl)
+      console.log(queryData)
       if (
         queryData.includes('pinterest.com/pin/') ||
         queryData.includes('pin.it')
@@ -201,6 +204,7 @@ export default {
                     }
                   })
                   .catch((err) => {
+                    error({ statusCode: 500, message: err })
                     console.error(err)
                     return {
                       errorAPi: false,
@@ -212,6 +216,8 @@ export default {
               }
             })
             .catch((err) => {
+              error({ statusCode: 500, message: err })
+
               console.error(err)
               return { errorAPi: false }
             })
@@ -245,6 +251,7 @@ export default {
               }
             })
             .catch((err) => {
+              error({ statusCode: 500, message: err })
               console.error(err)
               return { errorAPi: false }
             })
@@ -253,7 +260,7 @@ export default {
         return { errorAPi: false }
       }
     } catch (error) {
-      error({ statusCode: 404, message: 'Post not found' })
+      error({ statusCode: 500, message: error })
     }
   },
 }
