@@ -103,7 +103,7 @@
     <br>
     <nuxt-content
       :document="content"
-      class="prose-lg max-w-md lg:max-w-5xl mx-auto"
+      class="prose-lg max-w-sm lg:max-w-5xl mx-auto"
     />
 
   </div>
@@ -132,103 +132,103 @@ export default {
       // errorAPi: false,
     }
   },
-  mounted() {
-    console.log(process.env.BASE_URL)
-    try {
-      const queryData = decodeURIComponent(this.$route.query.dl)
-      console.log(queryData)
-      if (
-        queryData.includes('pinterest.com/pin/') ||
-        queryData.includes('pin.it')
-      ) {
-        if (queryData.includes('pin.it')) {
-          var configExpandUrl = {
-            method: 'get',
-            url: process.env.BASE_URL + 'expandurl',
-            headers: {
-              url: queryData,
-            },
-          }
-          return this.$axios(configExpandUrl)
-            .then((result) => {
-              if (
-                result.data !== {} &&
-                result.data != null &&
-                result.data != ''
-              ) {
-                const pinID = result.data.split('/')[4]
+  // mounted() {
+  //   console.log(process.env.BASE_URL)
+  //   try {
+  //     const queryData = decodeURIComponent(this.$route.query.dl)
+  //     console.log(queryData)
+  //     if (
+  //       queryData.includes('pinterest.com/pin/') ||
+  //       queryData.includes('pin.it')
+  //     ) {
+  //       if (queryData.includes('pin.it')) {
+  //         var configExpandUrl = {
+  //           method: 'get',
+  //           url: process.env.BASE_URL + 'expandurl',
+  //           headers: {
+  //             url: queryData,
+  //           },
+  //         }
+  //         return this.$axios(configExpandUrl)
+  //           .then((result) => {
+  //             if (
+  //               result.data !== {} &&
+  //               result.data != null &&
+  //               result.data != ''
+  //             ) {
+  //               const pinID = result.data.split('/')[4]
 
-                var config1 = {
-                  method: 'get',
-                  url: process.env.BASE_URL + 'pin',
-                  headers: {
-                    id: pinID,
-                  },
-                }
-                return this.$axios(config1)
-                  .then((result) => {
-                    if (
-                      result.data !== {} &&
-                      result.data != null &&
-                      result.data != ''
-                    ) {
-                      this.dataUrls = result.data
-                      this.errorAPi = true
-                      this.randomNumber = Math.floor(Math.random() * 1000) + 1
-                    } else {
-                      this.dataUrls = result.data
-                      this.errorAPi = false
-                      this.randomNumber = Math.floor(Math.random() * 1000) + 1
-                    }
-                  })
-                  .catch((err) => {
-                    console.error(err)
-                    this.errorAPi = false
-                    this.randomNumber = Math.floor(Math.random() * 1000) + 1
-                  })
-              } else {
-                this.errorAPi = false
-              }
-            })
-            .catch((err) => {
-              console.error(err)
-              this.errorAPi = false
-            })
-        } else if (queryData.includes('pinterest.com/pin/')) {
-          const pinID = queryData.split('/')[4]
-          var config2 = {
-            method: 'get',
-            url: process.env.BASE_URL + 'pin',
-            headers: {
-              id: pinID,
-            },
-          }
-          return this.$axios(config2)
-            .then((result) => {
-              if (
-                result.data !== {} &&
-                result.data != null &&
-                result.data != ''
-              ) {
-                console.log(result.data)
-                this.dataUrls = result.data
-                this.errorAPi = true
-                this.randomNumber = Math.floor(Math.random() * 1000) + 1
-              } else {
-                this.dataUrls = result.data
-                this.errorAPi = false
-                this.randomNumber = Math.floor(Math.random() * 1000) + 1
-              }
-            })
-            .catch((err) => {
-              console.error(err)
-              this.errorAPi = false
-            })
-        }
-        this.errorAPi = false
-      }
-    } catch (error) {}
-  },
+  //               var config1 = {
+  //                 method: 'get',
+  //                 url: process.env.BASE_URL + 'pin',
+  //                 headers: {
+  //                   id: pinID,
+  //                 },
+  //               }
+  //               return this.$axios(config1)
+  //                 .then((result) => {
+  //                   if (
+  //                     result.data !== {} &&
+  //                     result.data != null &&
+  //                     result.data != ''
+  //                   ) {
+  //                     this.dataUrls = result.data
+  //                     this.errorAPi = true
+  //                     this.randomNumber = Math.floor(Math.random() * 1000) + 1
+  //                   } else {
+  //                     this.dataUrls = result.data
+  //                     this.errorAPi = false
+  //                     this.randomNumber = Math.floor(Math.random() * 1000) + 1
+  //                   }
+  //                 })
+  //                 .catch((err) => {
+  //                   console.error(err)
+  //                   this.errorAPi = false
+  //                   this.randomNumber = Math.floor(Math.random() * 1000) + 1
+  //                 })
+  //             } else {
+  //               this.errorAPi = false
+  //             }
+  //           })
+  //           .catch((err) => {
+  //             console.error(err)
+  //             this.errorAPi = false
+  //           })
+  //       } else if (queryData.includes('pinterest.com/pin/')) {
+  //         const pinID = queryData.split('/')[4]
+  //         var config2 = {
+  //           method: 'get',
+  //           url: process.env.BASE_URL + 'pin',
+  //           headers: {
+  //             id: pinID,
+  //           },
+  //         }
+  //         return this.$axios(config2)
+  //           .then((result) => {
+  //             if (
+  //               result.data !== {} &&
+  //               result.data != null &&
+  //               result.data != ''
+  //             ) {
+  //               console.log(result.data)
+  //               this.dataUrls = result.data
+  //               this.errorAPi = true
+  //               this.randomNumber = Math.floor(Math.random() * 1000) + 1
+  //             } else {
+  //               this.dataUrls = result.data
+  //               this.errorAPi = false
+  //               this.randomNumber = Math.floor(Math.random() * 1000) + 1
+  //             }
+  //           })
+  //           .catch((err) => {
+  //             console.error(err)
+  //             this.errorAPi = false
+  //           })
+  //       }
+  //       this.errorAPi = false
+  //     }
+  //   } catch (error) {}
+  // },
   methods: {
     navToDl() {
       window.location.href = `?dl=${this.pinLink}`
@@ -242,8 +242,25 @@ export default {
       // }, 500)
     },
   },
+  // async asyncData({
+  //   isDev,
+  //   route,
+  //   store,
+  //   env,
+  //   params,
+  //   query,
+  //   req,
+  //   res,
+  //   redirect,
+  //   error,
+  // }) {
+  //   return {
+  //     content,
+  //   }
+  // },
   async asyncData({
     $content,
+    $axios,
     isDev,
     route,
     store,
@@ -256,133 +273,121 @@ export default {
     error,
   }) {
     const content = await $content('blog/pinterest').fetch()
-    return {
-      content,
+
+    try {
+      const queryData = decodeURIComponent(query.dl)
+      console.log(queryData)
+      if (
+        queryData.includes('pinterest.com/pin/') ||
+        queryData.includes('pin.it')
+      ) {
+        if (queryData.includes('pin.it')) {
+          var configExpandUrl = {
+            method: 'get',
+            url: env.BASE_URL + 'expandurl',
+            headers: {
+              url: queryData,
+            },
+          }
+          return $axios(configExpandUrl)
+            .then((result) => {
+              if (
+                result.data !== {} &&
+                result.data != null &&
+                result.data != ''
+              ) {
+                const pinID = result.data.split('/')[4]
+
+                var config1 = {
+                  method: 'get',
+                  url: env.BASE_URL + 'pin',
+                  headers: {
+                    id: pinID,
+                  },
+                }
+                return $axios(config1)
+                  .then((result) => {
+                    if (
+                      result.data !== {} &&
+                      result.data != null &&
+                      result.data != ''
+                    ) {
+                      return {
+                        dataUrls: result.data,
+                        errorAPi: true,
+                        randomNumber: Math.floor(Math.random() * 1000) + 1,
+                        content,
+                      }
+                    } else {
+                      return {
+                        dataUrls: result.data,
+                        errorAPi: false,
+                        randomNumber: Math.floor(Math.random() * 1000) + 1,
+                        content,
+                      }
+                    }
+                  })
+                  .catch((err) => {
+                    error({ statusCode: 500, message: err })
+                    console.error(err)
+                    return {
+                      errorAPi: false,
+                      randomNumber: Math.floor(Math.random() * 1000) + 1,
+                    }
+                  })
+              } else {
+                return { errorAPi: false, content }
+              }
+            })
+            .catch((err) => {
+              error({ statusCode: 500, message: err })
+
+              console.error(err)
+              return { errorAPi: false, content }
+            })
+        } else if (queryData.includes('pinterest.com/pin/')) {
+          const pinID = queryData.split('/')[4]
+          var config2 = {
+            method: 'get',
+            url: env.BASE_URL + 'pin',
+            headers: {
+              id: pinID,
+            },
+          }
+          return $axios(config2)
+            .then((result) => {
+              if (
+                result.data !== {} &&
+                result.data != null &&
+                result.data != ''
+              ) {
+                return {
+                  dataUrls: result.data,
+                  errorAPi: true,
+                  randomNumber: Math.floor(Math.random() * 1000) + 1,
+                  content,
+                }
+              } else {
+                return {
+                  dataUrls: result.data,
+                  errorAPi: false,
+                  randomNumber: Math.floor(Math.random() * 1000) + 1,
+                  content,
+                }
+              }
+            })
+            .catch((err) => {
+              error({ statusCode: 500, message: err })
+              console.error(err)
+              return { errorAPi: false, content }
+            })
+        }
+      } else {
+        return { errorAPi: false, content }
+      }
+    } catch (error) {
+      error({ statusCode: 500, message: error })
     }
   },
-  // asyncData({
-  //   $axios,
-  //   isDev,
-  //   route,
-  //   store,
-  //   env,
-  //   params,
-  //   query,
-  //   req,
-  //   res,
-  //   redirect,
-  //   error,
-  // }) {
-  //   try {
-  //     const queryData = decodeURIComponent(query.dl)
-  //     console.log(queryData)
-  //     if (
-  //       queryData.includes('pinterest.com/pin/') ||
-  //       queryData.includes('pin.it')
-  //     ) {
-  //       if (queryData.includes('pin.it')) {
-  //         var configExpandUrl = {
-  //           method: 'get',
-  //           url: env.BASE_URL + 'expandurl',
-  //           headers: {
-  //             url: queryData,
-  //           },
-  //         }
-  //         return $axios(configExpandUrl)
-  //           .then((result) => {
-  //             if (
-  //               result.data !== {} &&
-  //               result.data != null &&
-  //               result.data != ''
-  //             ) {
-  //               const pinID = result.data.split('/')[4]
-
-  //               var config1 = {
-  //                 method: 'get',
-  //                 url: env.BASE_URL + 'pin',
-  //                 headers: {
-  //                   id: pinID,
-  //                 },
-  //               }
-  //               return $axios(config1)
-  //                 .then((result) => {
-  //                   if (
-  //                     result.data !== {} &&
-  //                     result.data != null &&
-  //                     result.data != ''
-  //                   ) {
-  //                     return {
-  //                       dataUrls: result.data,
-  //                       errorAPi: true,
-  //                       randomNumber: Math.floor(Math.random() * 1000) + 1,
-  //                     }
-  //                   } else {
-  //                     return {
-  //                       dataUrls: result.data,
-  //                       errorAPi: false,
-  //                       randomNumber: Math.floor(Math.random() * 1000) + 1,
-  //                     }
-  //                   }
-  //                 })
-  //                 .catch((err) => {
-  //                   error({ statusCode: 500, message: err })
-  //                   console.error(err)
-  //                   return {
-  //                     errorAPi: false,
-  //                     randomNumber: Math.floor(Math.random() * 1000) + 1,
-  //                   }
-  //                 })
-  //             } else {
-  //               return { errorAPi: false }
-  //             }
-  //           })
-  //           .catch((err) => {
-  //             error({ statusCode: 500, message: err })
-
-  //             console.error(err)
-  //             return { errorAPi: false }
-  //           })
-  //       } else if (queryData.includes('pinterest.com/pin/')) {
-  //         const pinID = queryData.split('/')[4]
-  //         var config2 = {
-  //           method: 'get',
-  //           url: env.BASE_URL + 'pin',
-  //           headers: {
-  //             id: pinID,
-  //           },
-  //         }
-  //         return $axios(config2)
-  //           .then((result) => {
-  //             if (
-  //               result.data !== {} &&
-  //               result.data != null &&
-  //               result.data != ''
-  //             ) {
-  //               return {
-  //                 dataUrls: result.data,
-  //                 errorAPi: true,
-  //                 randomNumber: Math.floor(Math.random() * 1000) + 1,
-  //               }
-  //             } else {
-  //               return {
-  //                 dataUrls: result.data,
-  //                 errorAPi: false,
-  //                 randomNumber: Math.floor(Math.random() * 1000) + 1,
-  //               }
-  //             }
-  //           })
-  //           .catch((err) => {
-  //             error({ statusCode: 500, message: err })
-  //             console.error(err)
-  //             return { errorAPi: false }
-  //           })
-  //       }
-  //     } else {
-  //       return { errorAPi: false }
-  //     }
-  //   } catch (error) {
-  //     error({ statusCode: 500, message: error })
-  //   }
-  // },
 }
 </script>
