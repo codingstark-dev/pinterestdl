@@ -100,6 +100,12 @@
         </div> {{dataUrls}}
       </div>
     </div>
+    <br>
+    <nuxt-content
+      :document="content"
+      class="prose-lg max-w-md lg:max-w-5xl mx-auto"
+    />
+
   </div>
 
 </template>
@@ -235,6 +241,24 @@ export default {
       //   window.location.reload()
       // }, 500)
     },
+  },
+  async asyncData({
+    $content,
+    isDev,
+    route,
+    store,
+    env,
+    params,
+    query,
+    req,
+    res,
+    redirect,
+    error,
+  }) {
+    const content = await $content('blog/pinterest').fetch()
+    return {
+      content,
+    }
   },
   // asyncData({
   //   $axios,
